@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\BahanModel;
+use App\Models\ProdukModel;
 use Illuminate\Http\Request;
 
-class AdminBahanController extends Controller
+class AdminProdukController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
-        return view('admin.bahan.index', ['bahans' => BahanModel::all()]);
+        return view('admin.produk.index', ['produks' => ProdukModel::all()]);
     }
 
     /**
@@ -32,26 +31,18 @@ class AdminBahanController extends Controller
     {
         // Validasi input jika diperlukan
         $request->validate([
-            'nama' => 'required|string|unique:' . BahanModel::class,
+            'nama' => 'required|string|unique:' . ProdukModel::class,
             'harga' => 'required|numeric',
-            'bobot' => 'required|numeric',
-            'satuan' => 'required|string',
-            'harga_satuan' => 'required|numeric',
         ]);
-
         try {
-
             // Simpan data ke database
-            $bahanBaku = new BahanModel();
+            $bahanBaku = new ProdukModel();
             $bahanBaku->nama = $request->input('nama');
-            $bahanBaku->harga = $request->input('harga');
-            $bahanBaku->bobot = $request->input('bobot');
-            $bahanBaku->satuan = $request->input('satuan');
-            $bahanBaku->harga_satuan = $request->input('harga_satuan');
+            $bahanBaku->harga_jual = $request->input('harga');
             $bahanBaku->save();
 
             // Redirect atau berikan respons yang sesuai
-            alert()->success('Berhasil !', 'Data bahan baku baru berhasil di simpan');
+            alert()->success('Berhasil !', 'Data produk baru berhasil di simpan');
             return redirect()->back();
         } catch (\Throwable $th) {
             //throw $th;

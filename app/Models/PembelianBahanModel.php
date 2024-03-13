@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProdukModel extends Model
+class PembelianBahanModel extends Model
 {
     use HasFactory;
-
-    protected $table = 'produk';
+    protected $table = 'pembelian_bahan';
     protected $guarded = ['id'];
 
-    public function komposisi()
+
+    public function bahan()
     {
-        return $this->hasMany(KomposisiModel::class, 'id_produk', 'id');
+        return $this->belongsTo(BahanModel::class,  'id_bahan', 'id');
     }
 }

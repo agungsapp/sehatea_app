@@ -3,22 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\BahanModel;
-use App\Models\ProdukModel;
 use Illuminate\Http\Request;
 
-class AdminDashboardController extends Controller
+class AdminPembelianBahanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = [
-            'produks' => ProdukModel::all(),
-            'bahans' => BahanModel::all(),
-        ];
-        return view('admin.dashboard.index', $data);
+        return view('admin.pembelian_bahan.index');
     }
 
     /**

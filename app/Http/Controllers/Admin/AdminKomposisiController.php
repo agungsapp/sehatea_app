@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\BahanModel;
+use App\Models\KomposisiModel;
+use App\Models\ProdukModel;
 use Illuminate\Http\Request;
 
-class AdminBahanController extends Controller
+class AdminKomposisiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,16 @@ class AdminBahanController extends Controller
     public function index()
     {
 
-        return view('admin.bahan.index', ['bahans' => BahanModel::all()]);
+        $data = [
+            'komposisis' => KomposisiModel::all(),
+            'produks' => ProdukModel::all(),
+            'bahans' => BahanModel::all()
+        ];
+
+        // dd($data['komposisis']);
+
+
+        return view('admin.komposisi.index', $data);
     }
 
     /**
@@ -30,31 +41,46 @@ class AdminBahanController extends Controller
      */
     public function store(Request $request)
     {
+
+
         // Validasi input jika diperlukan
         $request->validate([
-            'nama' => 'required|string|unique:' . BahanModel::class,
-            'harga' => 'required|numeric',
-            'bobot' => 'required|numeric',
-            'satuan' => 'required|string',
-            'harga_satuan' => 'required|numeric',
+            'produk' => 'required',
+            'bahan' => 'required',
+            'takaran' => 'required|numeric',
         ]);
+
+
+        $id_bahan = $request->input('bahan');
+        $bahan = BahanModel::find($id_bahan);
+        // dd($bahan);
+        $total = $bahan->harga_satuan *  $request->input('takaran');
+
+
 
         try {
 
+            // Update hpp
+            $produk = ProdukModel::find($request->produk);
+
             // Simpan data ke database
-            $bahanBaku = new BahanModel();
-            $bahanBaku->nama = $request->input('nama');
-            $bahanBaku->harga = $request->input('harga');
-            $bahanBaku->bobot = $request->input('bobot');
-            $bahanBaku->satuan = $request->input('satuan');
-            $bahanBaku->harga_satuan = $request->input('harga_satuan');
-            $bahanBaku->save();
+            $komposisi = new KomposisiModel();
+            $komposisi->id_produk = $request->input('produk');
+            $komposisi->id_bahan = $request->input('bahan');
+            $komposisi->takaran = $request->input('takaran');
+            $komposisi->total_harga = $total;
+            $komposisi->save();
+
+            // Update total_harga pada ProdukModel
+            $totalHargaKomposisi = KomposisiModel::where('id_produk', $produk->id)->sum('total_harga');
+            $produk->hpp = $totalHargaKomposisi;
+            $produk->save();
 
             // Redirect atau berikan respons yang sesuai
-            alert()->success('Berhasil !', 'Data bahan baku baru berhasil di simpan');
+            alert()->success('Berhasil !', 'Data komposisi berhasil di simpan');
             return redirect()->back();
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
 
             // alert()->success('Berhasil !', 'Data bahan baku baru berhasil di simpan');
             alert()->error('Gagal !', 'Terjadi kesalahan di server');
