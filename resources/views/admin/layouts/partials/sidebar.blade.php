@@ -19,6 +19,12 @@
 						</a>
 				</li>
 				<li class="nav-item">
+						<a class="nav-link" href="{{ route('admin.stok.index') }}">
+								<i class="icon-grid menu-icon"></i>
+								<span class="menu-title">Stok Bahan Baku</span>
+						</a>
+				</li>
+				<li class="nav-item">
 						<a class="nav-link" href="{{ route('admin.pembelian-bahan.index') }}">
 								<i class="icon-grid menu-icon"></i>
 								<span class="menu-title">Pembelian Bahan Baku</span>

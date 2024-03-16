@@ -5,7 +5,7 @@
 		<!-- Required meta tags -->
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-		<title>Skydash Admin</title>
+		<title>Admin | Sehatea</title>
 		<!-- plugins:css -->
 		<link rel="stylesheet" href="{{ asset('assets') }}/vendors/feather/feather.css" />
 		<link rel="stylesheet" href="{{ asset('assets') }}/vendors/ti-icons/css/themify-icons.css" />
@@ -20,6 +20,9 @@
 		<link rel="stylesheet" href="{{ asset('assets') }}/css/vertical-layout-light/style.css" />
 		<!-- endinject -->
 		<link rel="shortcut icon" href="{{ asset('assets') }}/images/favicon.png" />
+
+		{{-- select 2 js --}}
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -293,6 +296,11 @@
 		<script src="{{ asset('assets') }}/js/dashboard.js"></script>
 		<script src="{{ asset('assets') }}/js/Chart.roundedBarCharts.js"></script>
 		<!-- End custom js for this page-->
+
+
+		{{-- seleect 2 js --}}
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
 		{{-- sweetalert --}}
 		@include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])

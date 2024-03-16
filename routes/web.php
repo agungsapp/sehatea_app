@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminKomposisiController;
 use App\Http\Controllers\Admin\AdminPembelianBahanController;
 use App\Http\Controllers\Admin\AdminProdukController;
+use App\Http\Controllers\Admin\AdminStokBahanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,10 +25,11 @@ Route::get('/', function () {
 })->middleware('auth');
 
 
-Route::prefix('/admin')->name('admin.')->group(function () {
+Route::prefix('/admin')->name('admin.')->middleware(['admin', 'auth'])->group(function () {
     Route::resource('dashboard', AdminDashboardController::class);
     Route::resource('produk', AdminProdukController::class);
     Route::resource('bahan', AdminBahanController::class);
+    Route::resource('stok', AdminStokBahanController::class);
     Route::resource('pembelian-bahan', AdminPembelianBahanController::class);
     Route::resource('komposisi', AdminKomposisiController::class);
 });

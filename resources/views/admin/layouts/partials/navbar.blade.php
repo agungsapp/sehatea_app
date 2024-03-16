@@ -26,7 +26,7 @@
 				<ul class="navbar-nav navbar-nav-right">
 						<li class="nav-item nav-profile dropdown">
 								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="coba">
-										<h5>Saldo : Rp. 1.200.000</h5>
+										<h5>Saldo : {{ Str::rupiah(Auth::user()->saldo->saldo) }}</h5>
 								</a>
 								<div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="coba">
 										<a class="dropdown-item">

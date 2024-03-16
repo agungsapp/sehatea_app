@@ -4,7 +4,7 @@
 				<div class="col-md-12 grid-margin">
 						<div class="row">
 								<div class="col-12 col-xl-8 mb-xl-0 mb-4">
-										<h3 class="font-weight-bold">Welcome Admin</h3>
+										<h3 class="font-weight-bold">Welcome {{ Auth::user()->name }}</h3>
 										<h6 class="font-weight-normal mb-0">
 												Semua sistem berjalan dengan baik dan sempurna
 												{{-- <span class="text-primary">3 unread alerts!</span> --}}

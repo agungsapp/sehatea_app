@@ -4,10 +4,10 @@
 				<div class="col-md-12 grid-margin">
 						<div class="row">
 								<div class="col-12 col-xl-8 mb-xl-0 mb-4">
-										<h3 class="font-weight-bold">Data Komposisi Produk</h3>
+										<h3 class="font-weight-bold">Stok Bahan Baku</h3>
 										<h6 class="font-weight-normal mb-0">
-												All systems are running smoothly! You have
-												<span class="text-primary">3 unread alerts!</span>
+												Semua tentang stok bahan baku ada dimari
+												{{-- <span class="text-primary">3 unread alerts!</span> --}}
 										</h6>
 								</div>
 						</div>
@@ -16,33 +16,10 @@
 								<div class="col-12">
 										<div class="card">
 												<div class="card-body">
-														<h5 class="fw-bold mb-3">Tambah data komposisi produk</h5>
-														<form action="{{ route('admin.komposisi.store') }}" method="POST">
+														<h5 class="fw-bold mb-3">Tambah stok bahan baku</h5>
+														<form action="{{ route('admin.stok.store') }}" method="POST">
 																@csrf
 																<div class="row py-3">
-
-
-
-
-
-																		<div class="col-6">
-																				<div class="mb-3">
-																						<label for="produk" class="form-label">Produk</label>
-																						<select class="form-control @error('produk') is-invalid @enderror" id="produk" name="produk"
-																								required>
-																								<option selected>-- pilih produk --</option>
-																								@foreach ($produks as $produk)
-																										<option value="{{ $produk->id }}">{{ $produk->nama }}</option>
-																								@endforeach
-
-																						</select>
-																						@error('produk')
-																								<div id="produk" class="invalid-feedback">
-																										{{ $message }}
-																								</div>
-																						@enderror
-																				</div>
-																		</div>
 
 																		<div class="col-6">
 																				<div class="mb-3">
@@ -65,25 +42,46 @@
 
 																		<div class="col-6">
 																				<div class="mb-3">
-																						<label for="takaran" class="form-label">Takaran</label>
-																						<div class="input-group">
-																								<span class="input-group-text">ml/gr/kg</span>
-																								<input type="text" class="form-control @error('takaran') is-invalid @enderror" name="takaran"
-																										id="takaran" required>
-																						</div>
-																						@error('takaran')
-																								<div id="takaran" class="invalid-feedback">
+																						<label for="saldo" class="form-label">Sumber Dana</label>
+																						<select class="form-control @error('saldo') is-invalid @enderror" id="saldo" name="saldo"
+																								required>
+																								<option selected>-- pilih sumber dana --</option>
+																								@foreach ($danas as $dana)
+																										<option value="{{ $dana->id }}">{{ $dana->nama }}</option>
+																								@endforeach
+
+																						</select>
+																						@error('bahan')
+																								<div id="bahan" class="invalid-feedback">
 																										{{ $message }}
 																								</div>
 																						@enderror
 																				</div>
 																		</div>
 
+																		<div class="col-6">
+																				<div class="mb-3">
+																						<label for="jumlah" class="form-label">Jumlah Penambahan</label>
+																						<input type="number" class="form-control @error('jumlah') is-invalid @enderror" name="jumlah"
+																								id="jumlah" placeholder="masukan dalam hitungan pcs" required>
+																						@error('jumlah')
+																								<div id="jumlah" class="invalid-feedback">
+																										{{ $message }}
+																								</div>
+																						@enderror
+																				</div>
+																		</div>
 
+																		{{--  tadi sampe sini ya lur --}}
+																		{{-- noted ! 
+																		rencananya : 
+																		1 . get id bahanya , kemudian get jumlah penambahan , pertimbangakan menggunakan saldo . atau hanya read only
+																		2. atau bikin aja pembelian bahan baku , yang mana akan menambah stok bahan baku ini ,
+																		3. stok bahan baku oke banget kalo di munculin di dashboard.
+																		4. dan jangan lupa pikirin untuk sifat es sama teh
 
-
-
-
+																		SEMANGATT LURRRR !!!!!!!!!
+																		 --}}
 
 
 																		<div class="col-12">
@@ -101,47 +99,31 @@
 								<div class="col-12">
 										<div class="card">
 												<div class="card-body">
-														<h5>Produk tersedia saat ini.</h5>
+														<h5>Bahan baku saat ini.</h5>
 														<table class="table">
 																<thead>
 																		<tr>
 																				<th scope="col">#</th>
-																				<th scope="col">Produk</th>
-																				<th scope="col">Bahan</th>
-																				<th scope="col">Takaran</th>
-																				<th scope="col">Total Harga</th>
+																				<th scope="col">Nama bahan</th>
+																				<th scope="col">Stok sekarang</th>
 																		</tr>
 																</thead>
 																<tbody>
-																		@foreach ($produks as $produk)
-																				@php
-																						$hpp = $produk->komposisi->sum('total_harga');
-																				@endphp
-																				@foreach ($produk->komposisi as $index => $kompos)
-																						<tr>
-																								@if ($index === 0)
-																										<th scope="row" rowspan="{{ $produk->komposisi->count() }}">{{ $loop->parent->iteration }}
-																										</th>
-																										<td rowspan="{{ $produk->komposisi->count() }}">
-																												<strong> {{ $produk->nama }}</strong>
-																												<br>
-																												<p class="fw-bold">Total HPP: {{ Str::rupiah($hpp) }}</p>
-																										</td>
-																								@endif
-																								<td>{{ $kompos->bahan->nama }}</td>
-																								<td>{{ $kompos->takaran }}</td>
-																								<td>{{ Str::rupiah($kompos->total_harga) }}</td>
-																						</tr>
-																				@endforeach
+																		@foreach ($stoks as $stok)
+																				<tr>
+																						<th scope="row">{{ $loop->iteration }}</th>
+																						<td>{{ $stok->bahan->nama }}</td>
+																						<td>{{ $stok->stok }}</td>
+
+																				</tr>
 																		@endforeach
+
 																</tbody>
 														</table>
 												</div>
 										</div>
 								</div>
 						</div>
-
-
 				</div>
 		</div>
 @endsection
@@ -149,14 +131,6 @@
 @push('script')
 		<script>
 				$(document).ready(function() {
-
-
-						// initial select2
-						$('#bahan').select2({
-
-						});
-
-
 						const harga = $('#harga');
 						const bobot = $('#bobot');
 						const satuan = $('#satuan');
