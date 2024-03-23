@@ -71,9 +71,24 @@
 																						@enderror
 																				</div>
 																		</div>
+																		{{-- opsi harga berbeda --}}
+																		<div class="col-6">
+																				<label for="harga_opsi" class="form-label">Harga Berbeda</label>
+																				<div class="input-group mb-3">
+																						<div class="input-group-prepend">
+																								<div class="input-group-text">
+																										<input id="harga_opsi" type="checkbox" aria-label="Checkbox for following text input"
+																												onchange="toggleInput()">
+																								</div>
+																						</div>
+																						<input id="harga_input" placeholder="(opsional) jika harga berbeda" type="number"
+																								class="form-control" name="harga_input" aria-label="Text input with checkbox">
+																				</div>
+																		</div>
+																</div>
 
-																		{{--  tadi sampe sini ya lur --}}
-																		{{-- noted ! 
+																{{--  tadi sampe sini ya lur --}}
+																{{-- noted ! 
 																		rencananya : 
 																		1 . get id bahanya , kemudian get jumlah penambahan , pertimbangakan menggunakan saldo . atau hanya read only
 																		2. atau bikin aja pembelian bahan baku , yang mana akan menambah stok bahan baku ini ,
@@ -84,44 +99,41 @@
 																		 --}}
 
 
-																		<div class="col-12">
-																				<button type="submit" class="btn btn-primary">Simpan</button>
-																		</div>
+																<div class="col-12">
+																		<button type="submit" class="btn btn-primary">Simpan</button>
 																</div>
-														</form>
 												</div>
+												</form>
 										</div>
 								</div>
 						</div>
+				</div>
+		</div>
 
+		<div class="row mt-5">
+				<div class="col-12">
+						<div class="card col-12">
+								<div class="card-body">
+										<h5>Bahan baku saat ini.</h5>
+										<table class="table">
+												<thead>
+														<tr>
+																<th scope="col">#</th>
+																<th scope="col">Nama bahan</th>
+																<th scope="col">Stok sekarang</th>
+														</tr>
+												</thead>
+												<tbody>
+														@foreach ($stoks as $stok)
+																<tr>
+																		<th scope="row">{{ $loop->iteration }}</th>
+																		<td>{{ $stok->bahan->nama }}</td>
+																		<td>{{ $stok->stok }}</td>
+																</tr>
+														@endforeach
 
-						<div class="row mt-5">
-								<div class="col-12">
-										<div class="card">
-												<div class="card-body">
-														<h5>Bahan baku saat ini.</h5>
-														<table class="table">
-																<thead>
-																		<tr>
-																				<th scope="col">#</th>
-																				<th scope="col">Nama bahan</th>
-																				<th scope="col">Stok sekarang</th>
-																		</tr>
-																</thead>
-																<tbody>
-																		@foreach ($stoks as $stok)
-																				<tr>
-																						<th scope="row">{{ $loop->iteration }}</th>
-																						<td>{{ $stok->bahan->nama }}</td>
-																						<td>{{ $stok->stok }}</td>
-
-																				</tr>
-																		@endforeach
-
-																</tbody>
-														</table>
-												</div>
-										</div>
+												</tbody>
+										</table>
 								</div>
 						</div>
 				</div>
@@ -131,6 +143,21 @@
 @push('script')
 		<script>
 				$(document).ready(function() {
+
+						toggleInput();
+
+						function toggleInput() {
+								var checkbox = document.getElementById("harga_opsi");
+								var inputNumber = document.getElementById("harga_input");
+								if (!checkbox.checked) {
+										inputNumber.disabled = true;
+								} else {
+										inputNumber.disabled = false;
+								}
+						}
+						document.getElementById("harga_opsi").addEventListener("change", toggleInput);
+
+
 						const harga = $('#harga');
 						const bobot = $('#bobot');
 						const satuan = $('#satuan');
@@ -163,6 +190,9 @@
 						satuan.on('change', function() {
 								updateHargaSatuan();
 						});
+
+
+
 				});
 		</script>
 @endpush

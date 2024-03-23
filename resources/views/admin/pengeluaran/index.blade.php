@@ -4,9 +4,9 @@
 				<div class="col-md-12 grid-margin">
 						<div class="row">
 								<div class="col-12 col-xl-8 mb-xl-0 mb-4">
-										<h3 class="font-weight-bold">Pembelian Bahan Baku</h3>
+										<h3 class="font-weight-bold">Stok Bahan Baku</h3>
 										<h6 class="font-weight-normal mb-0">
-												Kamu bisa melakukan transaksi pembelian bahan baku disini
+												Semua tentang stok bahan baku ada dimari
 												{{-- <span class="text-primary">3 unread alerts!</span> --}}
 										</h6>
 								</div>
@@ -16,7 +16,7 @@
 								<div class="col-12">
 										<div class="card">
 												<div class="card-body">
-														<h5 class="fw-bold mb-3">Tambah transaksi pembelian bahan baku</h5>
+														<h5 class="fw-bold mb-3">Tambah stok bahan baku</h5>
 														<form action="{{ route('admin.stok.store') }}" method="POST">
 																@csrf
 																<div class="row py-3">
@@ -27,8 +27,8 @@
 																						<select class="form-control @error('bahan') is-invalid @enderror" id="bahan" name="bahan"
 																								required>
 																								<option selected>-- pilih bahan baku --</option>
-																								@foreach ($bahans as $bahan)
-																										<option value="{{ $bahan->id }}">{{ $bahan->nama }}</option>
+																								@foreach ($operasionals as $operasional)
+																										<option value="{{ $operasional->id }}">{{ $operasional->nama }}</option>
 																								@endforeach
 
 																						</select>
@@ -71,24 +71,9 @@
 																						@enderror
 																				</div>
 																		</div>
-																		{{-- opsi harga berbeda --}}
-																		<div class="col-6">
-																				<label for="harga_opsi" class="form-label">Harga Berbeda</label>
-																				<div class="input-group mb-3">
-																						<div class="input-group-prepend">
-																								<div class="input-group-text">
-																										<input id="harga_opsi" type="checkbox" aria-label="Checkbox for following text input"
-																												onchange="toggleInput()">
-																								</div>
-																						</div>
-																						<input id="harga_input" placeholder="(opsional) jika harga berbeda" type="number"
-																								class="form-control" name="harga_input" aria-label="Text input with checkbox">
-																				</div>
-																		</div>
-																</div>
 
-																{{--  tadi sampe sini ya lur --}}
-																{{-- noted ! 
+																		{{--  tadi sampe sini ya lur --}}
+																		{{-- noted ! 
 																		rencananya : 
 																		1 . get id bahanya , kemudian get jumlah penambahan , pertimbangakan menggunakan saldo . atau hanya read only
 																		2. atau bikin aja pembelian bahan baku , yang mana akan menambah stok bahan baku ini ,
@@ -99,46 +84,44 @@
 																		 --}}
 
 
-																<div class="col-12">
-																		<button type="submit" class="btn btn-primary">Simpan</button>
+																		<div class="col-12">
+																				<button type="submit" class="btn btn-primary">Simpan</button>
+																		</div>
 																</div>
+														</form>
 												</div>
-												</form>
 										</div>
 								</div>
 						</div>
-				</div>
-		</div>
-		<div class="row mt-5">
-				<div class="col-12">
-						<div class="card">
-								<div class="card-body">
-										<h5>Histori transaksi pembelian bahan baku.</h5>
-										<table class="table">
-												<thead>
-														<tr>
-																<th scope="col">#</th>
-																<th scope="col">Nama bahan</th>
-																<th scope="col">Jumlah Beli</th>
-																<th scope="col">Harga Satuan</th>
-																<th scope="col">Total</th>
-																<th scope="col">Tanggal</th>
-														</tr>
-												</thead>
-												<tbody>
-														@foreach ($pembelians as $pembelian)
-																<tr>
-																		<th scope="row">{{ $loop->iteration }}</th>
-																		<td>{{ $pembelian->bahan->nama }}</td>
-																		<td>{{ $pembelian->jumlah }}</td>
-																		<td>{{ Str::rupiah($pembelian->harga_satuan) }}</td>
-																		<td>{{ Str::rupiah($pembelian->total) }}</td>
-																		<td>{{ Str::tanggalWaktu($pembelian->created_at) }}</td>
-																</tr>
-														@endforeach
 
-												</tbody>
-										</table>
+
+						<div class="row mt-5">
+								<div class="col-12">
+										<div class="card">
+												<div class="card-body">
+														<h5>Bahan baku saat ini.</h5>
+														<table class="table">
+																<thead>
+																		<tr>
+																				<th scope="col">#</th>
+																				<th scope="col">Nama bahan</th>
+																				<th scope="col">Stok sekarang</th>
+																		</tr>
+																</thead>
+																<tbody>
+																		{{-- @foreach ($stoks as $stok)
+																				<tr>
+																						<th scope="row">{{ $loop->iteration }}</th>
+																						<td>{{ $stok->bahan->nama }}</td>
+																						<td>{{ $stok->stok }}</td>
+
+																				</tr>
+																		@endforeach --}}
+
+																</tbody>
+														</table>
+												</div>
+										</div>
 								</div>
 						</div>
 				</div>
@@ -148,21 +131,6 @@
 @push('script')
 		<script>
 				$(document).ready(function() {
-
-						toggleInput();
-
-						function toggleInput() {
-								var checkbox = document.getElementById("harga_opsi");
-								var inputNumber = document.getElementById("harga_input");
-								if (!checkbox.checked) {
-										inputNumber.disabled = true;
-								} else {
-										inputNumber.disabled = false;
-								}
-						}
-						document.getElementById("harga_opsi").addEventListener("change", toggleInput);
-
-
 						const harga = $('#harga');
 						const bobot = $('#bobot');
 						const satuan = $('#satuan');
@@ -195,9 +163,6 @@
 						satuan.on('change', function() {
 								updateHargaSatuan();
 						});
-
-
-
 				});
 		</script>
 @endpush

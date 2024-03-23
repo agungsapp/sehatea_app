@@ -32,5 +32,10 @@ class AppServiceProvider extends ServiceProvider
         Str::macro('tanggal', function ($value) {
             return Carbon::parse($value)->format('d M, Y');
         });
+
+        Str::macro('tanggalWaktu', function ($value) {
+            // Ensure the value is a Carbon instance and format it to include time
+            return Carbon::parse($value)->format('d M, Y H:i:s');
+        });
     }
 }

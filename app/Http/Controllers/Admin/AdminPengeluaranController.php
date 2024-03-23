@@ -3,26 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\BahanModel;
-use App\Models\PembelianBahanModel;
+use App\Models\OperasionalModel;
 use App\Models\SaldoModel;
 use Illuminate\Http\Request;
 
-class AdminPembelianBahanController extends Controller
+class AdminPengeluaranController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+
         $data = [
-            'bahans' => BahanModel::all(),
-            'danas' => SaldoModel::all(),
-            'pembelians' => PembelianBahanModel::all()
+            'operasionals' => OperasionalModel::all(),
+            'danas' => SaldoModel::all()
         ];
 
-
-        return view('admin.pembelian_bahan.index', $data);
+        return view('admin.pengeluaran.index', $data);
     }
 
     /**
