@@ -2,6 +2,14 @@
 
 use App\Http\Controllers\Admin\AdminBahanController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminKomposisiController;
+use App\Http\Controllers\Admin\AdminPembelianBahanController;
+use App\Http\Controllers\Admin\AdminPengeluaranController;
+use App\Http\Controllers\Admin\AdminPenjualanController;
+use App\Http\Controllers\Admin\AdminProdukController;
+use App\Http\Controllers\Admin\AdminStokBahanController;
+use App\Http\Controllers\Admin\AdminTransaksiController;
+use App\Http\Controllers\Admin\AdminTransaksiPenjualanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,15 +29,25 @@ Route::get('/', function () {
 })->middleware('auth');
 
 
-Route::prefix('/admin')->name('admin.')->group(function () {
+Route::prefix('/admin')->name('admin.')->middleware(['admin', 'auth'])->group(function () {
     Route::resource('dashboard', AdminDashboardController::class);
+    Route::resource('produk', AdminProdukController::class);
     Route::resource('bahan', AdminBahanController::class);
+    Route::resource('stok', AdminStokBahanController::class);
+    Route::resource('pembelian-bahan', AdminPembelianBahanController::class);
+    Route::resource('komposisi', AdminKomposisiController::class);
+    Route::resource('pengeluaran', AdminPengeluaranController::class);
+
+    Route::prefix('transaksi')->name('transaksi.')->group(function () {
+        Route::resource('transaksi', AdminTransaksiController::class);
+        Route::resource('penjualan', AdminPenjualanController::class);
+    });
 });
 
 
 // new route start
 Route::get('test', function () {
-    return view('layouts.main');
+    return view('admin.dashboard.index');
 });
 // new route end
 
@@ -44,3 +62,32 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+
+// PR BERIKUTNYA 
+// LAST PENGERJAAN 17 MARET 00.41
+// - BERHASIL MEMBUAT SIMPLE UPDATE STOK ADMIN
+// - SEEDER USER , SALDO
+// - MIDDLEWARE MUST ADMIN
+
+// NEXT : 
+// - TAMBAHKAN LOGIKA UNTUK TRANSAKSI PEMBELIAN
+// - DENGAN BEBERAPA CABANG (BAHAN BAKU , PERALATAN, OPERASIONAL)
+// - BAHAN BAKU DENGAN MULTI PEMBELIAN
+// - PERALATAN INPUT SINGGLE
+// - OPERASIONAL INPUT SINGGLE
+
+
+// PERNAIKI DATABASE
+
+// TERAKHIR SABTU : 
+// LANJUTKAN UPDATE LOGIKA TRANSAKSI . DETAIL TRANSAKSI MENGGUNAKN UUID . ****DONE
+
+
+
+// LAST 25 MARET 11.08 , FITUR TRANSAKSI PENNGURANGAN STOK , PERBAIKAN PENAMBAHAN STOK .
+
+// NEXT : 
+// PASTIKAN TIDAK ADA BUG , KEMUDIAN LAKUKAN TESTING BERULANG
+// PASTIKAN PERFORMA BAIK 
+// SELANJUTNYA MUNGKIN MULAI MMEBUAT API DENGAN LOGIC YANG SAMA .

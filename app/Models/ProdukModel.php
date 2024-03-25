@@ -11,4 +11,9 @@ class ProdukModel extends Model
 
     protected $table = 'produk';
     protected $guarded = ['id'];
+
+    public function komposisi()
+    {
+        return $this->hasMany(KomposisiModel::class, 'id_produk', 'id');
+    }
 }

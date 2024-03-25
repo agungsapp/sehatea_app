@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('harga');
             $table->integer('bobot');
             $table->enum('satuan', ['gr', 'ml', 'kg']);
-            $table->integer('harga_satuan');
+            $table->decimal('harga_satuan');
             $table->timestamps();
         });
     }

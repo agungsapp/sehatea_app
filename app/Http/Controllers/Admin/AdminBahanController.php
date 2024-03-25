@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\BahanModel;
 use Illuminate\Http\Request;
 
 class AdminBahanController extends Controller
@@ -12,7 +13,8 @@ class AdminBahanController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('admin.bahan.index', ['bahans' => BahanModel::all()]);
     }
 
     /**
@@ -28,7 +30,36 @@ class AdminBahanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validasi input jika diperlukan
+        $request->validate([
+            'nama' => 'required|string|unique:' . BahanModel::class,
+            'harga' => 'required|numeric',
+            'bobot' => 'required|numeric',
+            'satuan' => 'required|string',
+            'harga_satuan' => 'required|numeric',
+        ]);
+
+        try {
+
+            // Simpan data ke database
+            $bahanBaku = new BahanModel();
+            $bahanBaku->nama = $request->input('nama');
+            $bahanBaku->harga = $request->input('harga');
+            $bahanBaku->bobot = $request->input('bobot');
+            $bahanBaku->satuan = $request->input('satuan');
+            $bahanBaku->harga_satuan = $request->input('harga_satuan');
+            $bahanBaku->save();
+
+            // Redirect atau berikan respons yang sesuai
+            alert()->success('Berhasil !', 'Data bahan baku baru berhasil di simpan');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            //throw $th;
+
+            // alert()->success('Berhasil !', 'Data bahan baku baru berhasil di simpan');
+            alert()->error('Gagal !', 'Terjadi kesalahan di server');
+            return redirect()->back();
+        }
     }
 
     /**
