@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\BahanModel;
+use App\Models\DetailTransaksiModel;
 use App\Models\ProdukModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminDashboardController extends Controller
@@ -14,9 +16,15 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
+        $startOfDay = Carbon::now()->startOfDay();
+        $endOfDay = Carbon::now()->endOfDay();
+        $omset = DetailTransaksiModel::whereBetween('created_at', [$startOfDay, $endOfDay])
+            ->sum('subtotal');
+
         $data = [
             'produks' => ProdukModel::all(),
             'bahans' => BahanModel::all(),
+            'omset' => $omset,
         ];
         return view('admin.dashboard.index', $data);
     }

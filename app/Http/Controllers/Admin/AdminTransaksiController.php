@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DetailTransaksiModel;
+use App\Models\TransaksiModel;
 use Illuminate\Http\Request;
+
+use function Ramsey\Uuid\v1;
 
 class AdminTransaksiController extends Controller
 {
@@ -12,7 +16,11 @@ class AdminTransaksiController extends Controller
      */
     public function index()
     {
-        return view('admin.transaksi.index');
+        $data = [
+            'transaksis' => TransaksiModel::all(),
+        ];
+
+        return view('admin.transaksi.index', $data);
     }
 
     /**
@@ -36,7 +44,13 @@ class AdminTransaksiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // dd('ok');
+        $data = [
+            'details' => DetailTransaksiModel::where('id_transaksi', $id)->get(),
+            'id' => $id,
+        ];
+
+        return view('admin.transaksi.show', $data);
     }
 
     /**

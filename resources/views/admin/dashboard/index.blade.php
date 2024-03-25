@@ -76,7 +76,7 @@
 										<div class="card card-light-blue">
 												<div class="card-body">
 														<p class="mb-4">Omset Hari Ini</p>
-														<p class="fs-30 mb-2">34040</p>
+														<p class="fs-30 mb-2">{{ Str::rupiah($omset) }}</p>
 														{{-- <p>2.00% (30 days)</p> --}}
 												</div>
 										</div>

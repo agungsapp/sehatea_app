@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('id_transaksi');
             $table->unsignedBigInteger('id_produk');
+            $table->integer('harga_satuan');
             $table->integer('jumlah');
             $table->integer('subtotal');
             $table->timestamps();

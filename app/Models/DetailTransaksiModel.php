@@ -9,8 +9,15 @@ class DetailTransaksiModel extends Model
 {
     use HasFactory;
 
+    protected $table = 'detail_transaksi';
+
     public function transaksi()
     {
         return $this->belongsTo(TransaksiModel::class, 'id_transaksi');
+    }
+
+    public function produk()
+    {
+        return $this->belongsTo(ProdukModel::class, 'id_produk');
     }
 }

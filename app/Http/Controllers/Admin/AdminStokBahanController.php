@@ -50,15 +50,13 @@ class AdminStokBahanController extends Controller
             'jumlah' => 'required|numeric|min:1',
             'harga_input' => 'numeric|min:1'
         ]);
-
         DB::beginTransaction();
-
         try {
             $bahan = BahanModel::findOrFail($request->bahan);
             $stokSekarang = $request->jumlah * $bahan->bobot; // Konversi jumlah ke satuan yang ditetapkan
-
             // Cek dan update atau buat stok bahan baru
-            $stokBahan = StokBahanModel::find($request->bahan);
+            $stokBahan = StokBahanModel::where('id_bahan', $request->bahan)->first();
+            // dd($stokBahan);
             if ($stokBahan) {
                 $stokBahan->stok += $stokSekarang;
                 $stokBahan->save();
@@ -67,6 +65,7 @@ class AdminStokBahanController extends Controller
                 $buatStokBaru->id_bahan = $request->bahan;
                 $buatStokBaru->stok = $stokSekarang;
                 $buatStokBaru->save();
+                // alert()->success('success', 'baris kondisi stok baru dijalankan.');
             }
 
             // Jika stok ditemukan atau baru dibuat, update jumlah stoknya dan harga satuan jika diperlukan
