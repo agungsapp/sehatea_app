@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use Database\Seeders\Admin\BahanSeeder;
+use Database\Seeders\Admin\KomposisiSeeder;
 use Database\Seeders\Admin\OperasionalSeeder;
 use Database\Seeders\Admin\ProdukSeeder;
 use Database\Seeders\Admin\SaldoSeeder;
@@ -23,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProdukSeeder::class);
         $this->call(SaldoSeeder::class);
         $this->call(OperasionalSeeder::class);
+        $this->call(KomposisiSeeder::class);
     }
 }

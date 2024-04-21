@@ -5,6 +5,10 @@
         "dev": "vite",
         "build": "vite build"
     },
+    "author": {
+        "name": "Agung Saputra",
+        "github": "https://github.com/agungsapp"
+    },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
         "alpinejs": "^3.4.2",
