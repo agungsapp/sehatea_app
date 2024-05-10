@@ -10,6 +10,7 @@ class DetailTransaksiModel extends Model
     use HasFactory;
 
     protected $table = 'detail_transaksi';
+    protected $guarded = ['id'];
 
     public function transaksi()
     {
