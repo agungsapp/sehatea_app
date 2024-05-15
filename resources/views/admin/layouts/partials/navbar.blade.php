@@ -109,8 +109,11 @@
 												Settings
 										</a>
 										<a class="dropdown-item">
-												<i class="ti-power-off text-primary"></i>
-												Logout
+												<form action="{{ route('logout') }}" method="post">
+														@csrf
+														<button type="submit"><i class="ti-power-off text-primary"></i>
+																Logout</button>
+												</form>
 										</a>
 								</div>
 						</li>

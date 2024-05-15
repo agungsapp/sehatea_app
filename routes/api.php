@@ -24,4 +24,5 @@ Route::get('/get-produk', [ApiProdukController::class, 'getProduk']);
 
 Route::prefix('transaksi')->group(function () {
     Route::post('create', [ApiTransaksiController::class, 'create']);
+    Route::post('create-stok', [ApiTransaksiController::class, 'createStok']);
 });
